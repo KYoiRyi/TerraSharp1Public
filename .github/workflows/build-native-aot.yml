@@ -1,0 +1,128 @@
+name: Build Native AOT
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  build-linux-x64:
+    name: Native AOT Build (linux-x64)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: KYoiRyi/TerraSharpOne
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Publish
+        run: |
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/linux-x64 --nologo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeuroCore-linux-x64
+          path: publish/linux-x64/NeuroCore.Web
+
+  build-win-x64:
+    name: Native AOT Build (win-x64)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: KYoiRyi/TerraSharpOne
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Publish
+        run: |
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r win-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/win-x64 --nologo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeuroCore-win-x64
+          path: publish/win-x64/NeuroCore.Web.exe
+
+  build-osx-x64:
+    name: Native AOT Build (osx-x64)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: KYoiRyi/TerraSharpOne
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Publish
+        run: |
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/osx-x64 --nologo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeuroCore-osx-x64
+          path: publish/osx-x64/NeuroCore.Web
+
+  build-osx-arm64:
+    name: Native AOT Build (osx-arm64)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: KYoiRyi/TerraSharpOne
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Publish
+        run: |
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/osx-arm64 --nologo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeuroCore-osx-arm64
+          path: publish/osx-arm64/NeuroCore.Web
+
+  build-linux-arm64:
+    name: Native AOT Build (linux-arm64)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: KYoiRyi/TerraSharpOne
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Install ARM64 cross toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libc6-dev-arm64-cross \
+            binutils-aarch64-linux-gnu \
+            gcc-aarch64-linux-gnu \
+            g++-aarch64-linux-gnu
+      - name: Publish
+        env:
+          CC: aarch64-linux-gnu-gcc
+          CXX: aarch64-linux-gnu-g++
+        run: |
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:StripSymbols=false -p:CppCompilerToolchain=aarch64-linux-gnu -o publish/linux-arm64 --nologo
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeuroCore-linux-arm64
+          path: publish/linux-arm64/NeuroCore.Web
