@@ -120,7 +120,7 @@ jobs:
           CC: aarch64-linux-gnu-gcc
           CXX: aarch64-linux-gnu-g++
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -p:CppCompilerToolchain=aarch64-linux-gnu -o publish/linux-arm64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -p:ObjCopyName=aarch64-linux-gnu-objcopy -p:CppCompilerToolchain=aarch64-linux-gnu -o publish/linux-arm64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
