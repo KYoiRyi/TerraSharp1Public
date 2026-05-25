@@ -21,7 +21,7 @@ jobs:
           dotnet-version: 10.0.x
       - name: Publish
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/linux-x64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -o publish/linux-x64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -43,7 +43,7 @@ jobs:
           dotnet-version: 10.0.x
       - name: Publish
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r win-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/win-x64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r win-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -o publish/win-x64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -65,7 +65,7 @@ jobs:
           dotnet-version: 10.0.x
       - name: Publish
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/osx-x64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-x64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -o publish/osx-x64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -87,7 +87,7 @@ jobs:
           dotnet-version: 10.0.x
       - name: Publish
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -o publish/osx-arm64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r osx-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -o publish/osx-arm64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -120,7 +120,7 @@ jobs:
           CC: aarch64-linux-gnu-gcc
           CXX: aarch64-linux-gnu-g++
         run: |
-          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:StripSymbols=false -p:CppCompilerToolchain=aarch64-linux-gnu -o publish/linux-arm64 --nologo
+          dotnet publish src/NeuroCore.Web/NeuroCore.Web.csproj -c Release -r linux-arm64 --self-contained true -p:PublishAot=true -p:PublishSingleFile=true -p:NativeUseCom=false -p:AllowUnsafeBlocks=true -p:OptimizationPreference=Size -p:StripSymbols=true -p:DebuggerSupport=false -p:EventSourceSupport=false -p:CppCompilerToolchain=aarch64-linux-gnu -o publish/linux-arm64 --nologo
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
